@@ -1,13 +1,28 @@
 use std::io::{BufRead, Write};
 
 fn main() {
-    choose(vec![
-        "AAAA",
-        "WAAAAAAAAAAA",
-        "WAAAAAAAAAAHAHAHAHAHAAAAAAAAAAAA",
-    ]);
+    match choose(vec!["Yes", "No", "Maybe"]) {
+        0 => println!("You chose yes."),
+        1 => println!("You chose no."),
+        2 => println!("You chose maybe."),
+        _ => panic!(),
+    }
 }
 
+/// Asks the user for their input through a prompt, returning their choice as the index of the vec of choices passed in. This function will repeat the prompt until the user provides a valid positive integer in range.
+/// # Arguments
+/// `options` - The choices you present to the user.
+/// # Examples
+/// ```no_run
+/// fn main() {
+///    match choose(vec!["Yes", "No", "Maybe"]) {
+///        0 => println!("You chose yes."),
+///        1 => println!("You chose no."),
+///        2 => println!("You chose maybe."),
+///        _ => panic!(),
+///    }
+///}
+/// ```
 fn choose(options: Vec<&str>) -> usize {
     for (i, option) in options.iter().enumerate() {
         println!("{}. {}", i + 1, option);
@@ -25,7 +40,7 @@ fn choose(options: Vec<&str>) -> usize {
         {
             Ok(selection) => {
                 if selection <= options.len() {
-                    break selection;
+                    break selection - 1;
                 } else {
                     println!(
                         "Please enter a valid number between 1 and {}.",
